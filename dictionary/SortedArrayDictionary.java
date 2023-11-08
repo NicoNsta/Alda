@@ -1,5 +1,3 @@
-package dictionary;
-
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -96,7 +94,7 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
     }
 
     @Override
-    public Iterator<dictionary.Dictionary.Entry<K, V>> iterator() {
+    public Iterator<Dictionary.Entry<K, V>> iterator() {
         return new Iterator<Dictionary.Entry<K, V>>() {
             private int pos = 0;
 

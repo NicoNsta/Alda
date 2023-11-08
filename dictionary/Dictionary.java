@@ -1,8 +1,6 @@
 // O. Bittel
 // 26.09.2022
 
-package dictionary;
-
 import java.util.Iterator;
 
 /**

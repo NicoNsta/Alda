@@ -1,5 +1,3 @@
-package dictionary;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -137,7 +135,7 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
     }
 
     @Override
-    public Iterator<dictionary.Dictionary.Entry<K, V>> iterator() {
+    public Iterator<Dictionary.Entry<K, V>> iterator() {
         return new Iterator<Dictionary.Entry<K,V>>() {
             int i = 0;
             int j = 0;
