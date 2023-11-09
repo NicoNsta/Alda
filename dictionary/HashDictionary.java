@@ -6,8 +6,6 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
     private int size;
     private LinkedList<Entry<K, V>>[] data;
     private int count = 0;
-    private int lastSize;
-    private int nextSize;
 
     private static class Entry<K, V> {
         private K key;
