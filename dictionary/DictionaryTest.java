@@ -241,6 +241,7 @@ public class DictionaryTest {
 		dict.insert("spielen", "play");
 		dict.insert("planen", "plan");
 		dict.insert("diskutieren", "discuss");
+		// dict.insert("testen", "test");
 
 		System.out.println(dict.size());
 		for (Dictionary.Entry<String, String> e : dict) {
