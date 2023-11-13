@@ -1,3 +1,14 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+import javax.print.DocFlavor.INPUT_STREAM;
+import javax.swing.JFileChooser;
+
 /*
  * Test der verscheidenen Dictionary-Implementierungen
  *
@@ -15,21 +26,121 @@ public class DictionaryTest {
 	 * @param args not used.
 	 */
 	public static void main(String[] args)  {
-		long startTime, endTime, duration;
+
+	Scanner scanner = new Scanner(System.in);
+	
+	long startTime, endTime, duration;
+
+	String input = scanner.nextLine(); 
+	String[] words = input.split(" ");
+	String firstWord = words[0];
+
+	if (firstWord.equals("create")) {
+		Dictionary<String, String> dict = new HashDictionary<>();
+	
+		while (true) {
+
+		input = scanner.nextLine(); 
+		words = input.split(" ");
+		firstWord = words[0];
+		String secondWord = words.length > 1 ? words[1] : null;
+		String thirdWord = words.length > 2 ? words[2] : null;
+
+		
+		if (firstWord.equals("r")) {
+
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+			int result = fileChooser.showOpenDialog(null);
+
+			if (result == JFileChooser.APPROVE_OPTION) {
+				int n;
+				
+				if(secondWord != null) {
+					n = Integer.parseInt(secondWord); 
+				} else { 
+					n = Integer.MAX_VALUE;
+				}
+
+				File selectedFile = fileChooser.getSelectedFile();
+				System.out.println("Acusgewählte Datei: " + selectedFile.getAbsolutePath());
+
+				startTime = System.nanoTime();
+
+				try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+					for (int i = 0; i < n; i++) {
+						String line = reader.readLine();
+						if (line != null) {
+							StringTokenizer st = new StringTokenizer(line);
+							if (st.hasMoreTokens()) {
+								String fW = st.nextToken();
+								if (st.hasMoreTokens()) {
+									String sW = st.nextToken();
+									dict.insert(fW, sW);
+								}
+							}
+						} else {
+							break;
+						}
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				endTime = System.nanoTime();
+				duration = endTime - startTime;
+				System.out.println("Alle " + n + " Einträge, wurden in " + (duration / 1_000_000) + " Milisekunden (" + duration + " Nanosekunden) eingetragen");
+			}
+		}	
+
+
+		else if (firstWord.equals("p")) {
+			for (Dictionary.Entry<String, String> e : dict) {
+				System.out.println(e.getKey() + ": " + e.getValue() + " search: " + dict.search(e.getKey()));
+			}
+
+		} else if (firstWord.equals("s")) {
+			System.out.println(dict.search(secondWord));
+		
+		} else if (firstWord.equals("slist")) {
+			File file = new File("output.txt");
+			try (PrintWriter writer = new PrintWriter(file)) {
+				for (Dictionary.Entry<String, String> e : dict) {
+					writer.println(e.getKey());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+		} else if (firstWord.equals("i")) {
+			dict.insert(secondWord, thirdWord);
+		
+		} else if (firstWord.equals("d")) {
+			dict.remove(secondWord);
+
+		} else if (firstWord.equals("exit")) {
+			break;
+		} else {
+			System.out.println("Falsche Eingabe!");
+		}
+		}
+	}
+
+		// long startTime, endTime, duration;
 	
 		// Laufzeitmessung für testSortedArrayDictionary
-		startTime = System.nanoTime();
-		testSortedArrayDictionary();
-		endTime = System.nanoTime();
-		duration = endTime - startTime;
-		System.out.println("Laufzeit: " + (duration / 1_000_000) + " Milisekunden / " + duration + " Nanosekunden");
+		// startTime = System.nanoTime();
+		// testSortedArrayDictionary();
+		// endTime = System.nanoTime();
+		// duration = endTime - startTime;
+		// System.out.println("Laufzeit: " + (duration / 1_000_000) + " Milisekunden / " + duration + " Nanosekunden");
 	
 		// Laufzeitmessung für testHashDictionary
-		startTime = System.nanoTime();
-		testHashDictionary();
-		endTime = System.nanoTime();
-		duration = endTime - startTime;
-		System.out.println("Laufzeit: " + (duration / 1_000_000) + " Milisekunden / " + duration + " Nanosekunden");
+		// startTime = System.nanoTime();
+		// testHashDictionary();
+		// endTime = System.nanoTime();
+		// duration = endTime - startTime;
+		// System.out.println("Laufzeit: " + (duration / 1_000_000) + " Milisekunden / " + duration + " Nanosekunden");
 	
 		// Laufzeitmessung für testBinaryTreeDictionary
 		// startTime = System.nanoTime();
@@ -39,15 +150,15 @@ public class DictionaryTest {
 		// System.out.println("Laufzeit von testBinaryTreeDictionary: " + duration + " Nanosekunden");
 	}
 
-	private static void testSortedArrayDictionary() {
-		Dictionary<String, String> dict = new SortedArrayDictionary<>();
-		testDict(dict);
-	}
+	// private static void testSortedArrayDictionary() {
+	// 	Dictionary<String, String> dict = new SortedArrayDictionary<>();
+	// 	testDict(dict);
+	// }
 	
-	private static void testHashDictionary() {
-		Dictionary<String, String> dict = new HashDictionary<>();
- 		testDict(dict);
-	}
+	// private static void testHashDictionary() {
+	// 	Dictionary<String, String> dict = new HashDictionary<>();
+ 	// 	testDict(dict);
+	// }
 	
 	// private static void testBinaryTreeDictionary() {
 	// 	Dictionary<String, String> dict = new BinaryTreeDictionary<>();
