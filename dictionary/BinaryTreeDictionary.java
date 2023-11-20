@@ -98,10 +98,65 @@ public class BinaryTreeDictionary<K extends Comparable<K>, V> implements Diction
             oldValue = p.value;
             p.value = value;
         }
+        p = balance(p);
         return p;
     }
 
+    private Node<K,V> balance(Node<K,V> p) {
+        if (p == null)
+            return null;
+        if (getBalance(p) == 2) {
+            if (getBalance(p.right) < 0)
+                p.right = rotateRight(p.right);
+            p = rotateLeft(p);
+        } else if (getBalance(p) == -2) {
+            if (getBalance(p.left) > 0)
+                p.left = rotateLeft(p.left);
+            p = rotateRight(p);
+        }
+        p.height = Math.max(getHigh(p.left), getHigh(p.right)) + 1;
+        return p;
+    }
 
+    private Node<K,V> rotateRight(Node<K,V> p) {
+        assert p != null && p.left != null;
+        Node<K,V> q = p.left;
+        p.left = q.right;
+        if (p.left != null)
+            p.left.parent = p;
+        q.right = p;
+        q.parent = p.parent;
+        p.parent = q;
+        p.height = Math.max(getHigh(p.left), getHigh(p.right)) + 1;
+        q.height = Math.max(getHigh(q.left), getHigh(q.right)) + 1;
+        return q;
+    }
+
+    private Node<K,V> rotateLeft(Node<K,V> p) {
+        assert p != null && p.right != null;
+        Node<K,V> q = p.right;
+        p.right = q.left;
+        if (p.right != null)
+            p.right.parent = p;
+        q.left = p;
+        q.parent = p.parent;
+        p.parent = q;
+        p.height = Math.max(getHigh(p.left), getHigh(p.right)) + 1;
+        q.height = Math.max(getHigh(q.left), getHigh(q.right)) + 1;
+        return q;
+    }
+
+    // private Node<K,V> rotateLeftRight(Node<K,V> p) {
+    //     assert p != null && p.left != null && p.left.right != null;
+    //     p.left = rotateLeft(p.left);
+    //     return rotateRight(p);
+    // }
+
+    // private Node<K,V> rotateRightLeft(Node<K,V> p) {
+    //     assert p != null && p.right != null && p.right.left != null;
+    //     p.right = rotateRight(p.right);
+    //     return rotateLeft(p);
+    // }
 
     @Override
     public V search(K key) {
@@ -165,6 +220,20 @@ public class BinaryTreeDictionary<K extends Comparable<K>, V> implements Diction
     private static class MinEntry<K, V> {
         private K key;
         private V value;
+    }
+
+    private int getHigh(Node<K,V> p) {
+        if (p == null)
+            return -1;
+        else
+            return p.height;
+    }
+
+    private int getBalance(Node<K,V> p) {
+        if (p == null)
+            return 0;
+        else
+            return getHigh(p.right) - getHigh(p.left);
     }
 
     public void printInOrder() {

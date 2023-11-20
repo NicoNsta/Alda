@@ -22,105 +22,83 @@ import javax.swing.JFileChooser;
  */
 public class DictionaryTest {
 
+	
 	/**
 	 * @param args not used.
 	 */
-	public static void main(String[] args)  {
+public static void main(String[] args)  {
 
-	// Scanner scanner = new Scanner(System.in);
+	Scanner scanner = new Scanner(System.in);
 	
-	// long startTime, endTime, duration;
+	long startTime, endTime, duration;
 
-	// String input = scanner.nextLine(); 
-	// String[] words = input.split(" ");
-	// String firstWord = words[0];
+	String input = scanner.nextLine(); 
+	String[] words = input.split(" ");
+	String firstWord = words[0];
 
-	// if (firstWord.equals("create")) {
-	// 	Dictionary<String, String> dict = new HashDictionary<>();
+	if (firstWord.equals("create")) {
+		Dictionary<String, String> dict = new BinaryTreeDictionary<>(); // SortedArrayDictionary<>(); // HashDictionary<>(); // BinaryTreeDictionary<>();
 	
-	// 	while (true) {
+		while (true) {
 
-	// 	input = scanner.nextLine(); 
-	// 	words = input.split(" ");
-	// 	firstWord = words[0];
-	// 	String secondWord = words.length > 1 ? words[1] : null;
-	// 	String thirdWord = words.length > 2 ? words[2] : null;
+		input = scanner.nextLine(); 
+		words = input.split(" ");
+		firstWord = words[0];
+		String secondWord = words.length > 1 ? words[1] : null;
+		String thirdWord = words.length > 2 ? words[2] : null;
 
 		
-	// 	if (firstWord.equals("r")) {
+		if (firstWord.equals("r")) {
 
-	// 		JFileChooser fileChooser = new JFileChooser();
-	// 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-	// 		int result = fileChooser.showOpenDialog(null);
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+			int result = fileChooser.showOpenDialog(null);
 
-	// 		if (result == JFileChooser.APPROVE_OPTION) {
-	// 			int n;
+			if (result == JFileChooser.APPROVE_OPTION) {
+				int n;
 				
-	// 			if(secondWord != null) {
-	// 				n = Integer.parseInt(secondWord); 
-	// 			} else { 
-	// 				n = Integer.MAX_VALUE;
-	// 			}
+				if(secondWord != null) {
+					n = Integer.parseInt(secondWord); 
+				} else { 
+					n = Integer.MAX_VALUE;
+				}
 
-<<<<<<< HEAD
-	// 			File selectedFile = fileChooser.getSelectedFile();
-	// 			System.out.println("Acusgewählte Datei: " + selectedFile.getAbsolutePath());
-=======
 				File selectedFile = fileChooser.getSelectedFile();
 				System.out.println("Ausgewählte Datei: " + selectedFile.getAbsolutePath());
->>>>>>> 5946b3c8f0a4870c15b90ff1b19ce2ef9d726a72
 
-	// 			startTime = System.nanoTime();
+				startTime = System.nanoTime();
 
-	// 			try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
-	// 				for (int i = 0; i < n; i++) {
-	// 					String line = reader.readLine();
-	// 					if (line != null) {
-	// 						StringTokenizer st = new StringTokenizer(line);
-	// 						if (st.hasMoreTokens()) {
-	// 							String fW = st.nextToken();
-	// 							if (st.hasMoreTokens()) {
-	// 								String sW = st.nextToken();
-	// 								dict.insert(fW, sW);
-	// 							}
-	// 						}
-	// 					} else {
-	// 						break;
-	// 					}
-	// 				}
-	// 			} catch (IOException e) {
-	// 				e.printStackTrace();
-	// 			}
-	// 			endTime = System.nanoTime();
-	// 			duration = endTime - startTime;
-	// 			System.out.println("Alle " + n + " Einträge, wurden in " + (duration / 1_000_000) + " Milisekunden (" + duration + " Nanosekunden) eingetragen");
-	// 		}
-	// 	}	
+				try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+					for (int i = 0; i < n; i++) {
+						String line = reader.readLine();
+						if (line != null) {
+							StringTokenizer st = new StringTokenizer(line);
+							if (st.hasMoreTokens()) {
+								String fW = st.nextToken();
+								if (st.hasMoreTokens()) {
+									String sW = st.nextToken();
+									dict.insert(fW, sW);
+								}
+							}
+						} else {
+							break;
+						}
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				endTime = System.nanoTime();
+				duration = endTime - startTime;
+				System.out.println("Alle " + n + " Einträge, wurden in " + (duration / 1_000_000) + " Milisekunden (" + duration + " Nanosekunden) eingetragen");
+			}
+		} else if (firstWord.equals("p")) {
+			for (Dictionary.Entry<String, String> e : dict) {
+				System.out.println(e.getKey() + ": " + e.getValue() + " search: " + dict.search(e.getKey()));
+			}
 
-
-	// 	else if (firstWord.equals("p")) {
-	// 		for (Dictionary.Entry<String, String> e : dict) {
-	// 			System.out.println(e.getKey() + ": " + e.getValue() + " search: " + dict.search(e.getKey()));
-	// 		}
-
-	// 	} else if (firstWord.equals("s")) {
-	// 		System.out.println(dict.search(secondWord));
-		
-<<<<<<< HEAD
-	// 	} else if (firstWord.equals("slist")) {
-	// 		File file = new File("output.txt");
-	// 		try (PrintWriter writer = new PrintWriter(file)) {
-	// 			for (Dictionary.Entry<String, String> e : dict) {
-	// 				writer.println(e.getKey());
-	// 			}
-	// 		} catch (IOException e) {
-	// 			e.printStackTrace();
-	// 		}
+		} else if (firstWord.equals("s")) {
+			System.out.println(dict.search(secondWord));
 			
-			
-	// 	} else if (firstWord.equals("i")) {
-	// 		dict.insert(secondWord, thirdWord);
-=======
 		} else if (firstWord.equals("listde")) {
 			File file = new File("worldlist.txt");
 			try (PrintWriter writer = new PrintWriter(file)) {
@@ -130,6 +108,7 @@ public class DictionaryTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			System.out.println("DE List created!");
 		
 		} else if (firstWord.equals("listen")) {
 			File file = new File("worldlist.txt");
@@ -140,6 +119,7 @@ public class DictionaryTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			System.out.println("EN List created!");
 
 		} else if (firstWord.equals("stest")) {
 			startTime = System.nanoTime();
@@ -160,36 +140,27 @@ public class DictionaryTest {
 
 		} else if (firstWord.equals("i")) {
 			dict.insert(secondWord, thirdWord);
->>>>>>> 5946b3c8f0a4870c15b90ff1b19ce2ef9d726a72
+			System.out.println("Inserted!");
 		
-	// 	} else if (firstWord.equals("d")) {
-	// 		dict.remove(secondWord);
+		} else if (firstWord.equals("d")) {
+			dict.remove(secondWord);
+			System.out.println("Removed!");
 
-	// 	} else if (firstWord.equals("exit")) {
-	// 		break;
-	// 	} else {
-	// 		System.out.println("Falsche Eingabe!");
-	// 	}
-	// 	}
-	// }
+		} else if (firstWord.equals("exit")) {
+			break;
+		} else {
+			System.out.println("Falsche Eingabe!");
+		}
+		}
+	
 
-		// long startTime, endTime, duration;
-	
-		// Laufzeitmessung für testSortedArrayDictionary
-		// startTime = System.nanoTime();
-		// testSortedArrayDictionary();
-		// endTime = System.nanoTime();
-		// duration = endTime - startTime;
-		// System.out.println("Laufzeit: " + (duration / 1_000_000) + " Milisekunden / " + duration + " Nanosekunden");
-	
-		// Laufzeitmessung für testHashDictionary
-		// startTime = System.nanoTime();
-		// testHashDictionary();
-		// endTime = System.nanoTime();
-		// duration = endTime - startTime;
-		// System.out.println("Laufzeit: " + (duration / 1_000_000) + " Milisekunden / " + duration + " Nanosekunden");
-		testBinaryTreeDictionary();
+			// testSortedArrayDictionary();
+
+			// testHashDictionary();
+
+	testBinaryTreeDictionary();
 	}
+}
 
 	// private static void testSortedArrayDictionary() {
 	// 	Dictionary<String, String> dict = new SortedArrayDictionary<>();
@@ -208,50 +179,51 @@ public class DictionaryTest {
         // Test für BinaryTreeDictionary mit prettyPrint 
         // (siehe Aufgabe 10; Programmiertechnik 2).
         // Pruefen Sie die Ausgabe von prettyPrint auf Papier nach.
-        BinaryTreeDictionary<Integer, Integer> btd = new BinaryTreeDictionary<>();
-        btd.insert(10, 0);
-        btd.insert(20, 0);
-        btd.insert(50, 0);
-        System.out.println("insert:");
-        btd.prettyPrint();
 
-        btd.insert(40, 0);
-        btd.insert(30, 0);
-        System.out.println("insert:");
-        btd.prettyPrint();
+        // BinaryTreeDictionary<Integer, Integer> btd = new BinaryTreeDictionary<>();
+        // btd.insert(10, 0);
+        // btd.insert(20, 0);
+        // btd.insert(50, 0);
+        // System.out.println("insert:");
+        // btd.prettyPrint();
 
-        btd.insert(21, 0);
-        System.out.println("insert:");
-        btd.prettyPrint();
+        // btd.insert(40, 0);
+        // btd.insert(30, 0);
+        // System.out.println("insert:");
+        // btd.prettyPrint();
 
-        btd.insert(35, 0);
-        btd.insert(45, 0);
-        System.out.println("insert:");
-        btd.prettyPrint();
+        // btd.insert(21, 0);
+        // System.out.println("insert:");
+        // btd.prettyPrint();
 
-        System.out.println("For Each Loop:");
-        for (Dictionary.Entry<Integer, Integer> e : btd) {
-            System.out.println(e.getKey() + ": " + e.getValue());
-        }
+        // btd.insert(35, 0);
+        // btd.insert(45, 0);
+        // System.out.println("insert:");
+        // btd.prettyPrint();
 
-        btd.remove(30);
-        System.out.println("remove:");
-        btd.prettyPrint();
+        // System.out.println("For Each Loop:");
+        // for (Dictionary.Entry<Integer, Integer> e : btd) {
+        //     System.out.println(e.getKey() + ": " + e.getValue());
+        // }
 
-        btd.remove(35);
-        btd.remove(40);
-        btd.remove(45);
-        System.out.println("remove:");
-        btd.prettyPrint();
+        // btd.remove(30);
+        // System.out.println("remove:");
+        // btd.prettyPrint();
+
+        // btd.remove(35);
+        // btd.remove(40);
+        // btd.remove(45);
+        // System.out.println("remove:");
+        // btd.prettyPrint();
 		
-		btd.remove(50);
-        System.out.println("remove:");
-        btd.prettyPrint();
+		// btd.remove(50);
+        // System.out.println("remove:");
+        // btd.prettyPrint();
 
-		System.out.println("For Each Loop:");
-		for (Dictionary.Entry<Integer, Integer> e : btd) {
-			System.out.println(e.getKey() + ": " + e.getValue());
-		}
+		// System.out.println("For Each Loop:");
+		// for (Dictionary.Entry<Integer, Integer> e : btd) {
+		// 	System.out.println(e.getKey() + ": " + e.getValue());
+		// }
     }
 	
 	private static void testDict(Dictionary<String, String> dict) {
