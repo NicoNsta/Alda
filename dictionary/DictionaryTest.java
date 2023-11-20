@@ -62,8 +62,13 @@ public class DictionaryTest {
 	// 				n = Integer.MAX_VALUE;
 	// 			}
 
+<<<<<<< HEAD
 	// 			File selectedFile = fileChooser.getSelectedFile();
 	// 			System.out.println("Acusgewählte Datei: " + selectedFile.getAbsolutePath());
+=======
+				File selectedFile = fileChooser.getSelectedFile();
+				System.out.println("Ausgewählte Datei: " + selectedFile.getAbsolutePath());
+>>>>>>> 5946b3c8f0a4870c15b90ff1b19ce2ef9d726a72
 
 	// 			startTime = System.nanoTime();
 
@@ -101,6 +106,7 @@ public class DictionaryTest {
 	// 	} else if (firstWord.equals("s")) {
 	// 		System.out.println(dict.search(secondWord));
 		
+<<<<<<< HEAD
 	// 	} else if (firstWord.equals("slist")) {
 	// 		File file = new File("output.txt");
 	// 		try (PrintWriter writer = new PrintWriter(file)) {
@@ -114,6 +120,47 @@ public class DictionaryTest {
 			
 	// 	} else if (firstWord.equals("i")) {
 	// 		dict.insert(secondWord, thirdWord);
+=======
+		} else if (firstWord.equals("listde")) {
+			File file = new File("worldlist.txt");
+			try (PrintWriter writer = new PrintWriter(file)) {
+				for (Dictionary.Entry<String, String> e : dict) {
+					writer.println(e.getKey());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		} else if (firstWord.equals("listen")) {
+			File file = new File("worldlist.txt");
+			try (PrintWriter writer = new PrintWriter(file)) {
+				for (Dictionary.Entry<String, String> e : dict) {
+					writer.println(e.getValue());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		} else if (firstWord.equals("stest")) {
+			startTime = System.nanoTime();
+
+			try (BufferedReader reader = new BufferedReader(new FileReader("worldlist.txt"))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					System.out.println(dict.search(line));
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			endTime = System.nanoTime();
+			duration = endTime - startTime;
+			System.out.println("Alle Einträge, wurden in " + (duration / 1_000_000) + " Milisekunden (" + duration + " Nanosekunden) gesucht");
+
+
+		} else if (firstWord.equals("i")) {
+			dict.insert(secondWord, thirdWord);
+>>>>>>> 5946b3c8f0a4870c15b90ff1b19ce2ef9d726a72
 		
 	// 	} else if (firstWord.equals("d")) {
 	// 		dict.remove(secondWord);

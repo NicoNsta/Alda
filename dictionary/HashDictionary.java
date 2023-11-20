@@ -29,7 +29,7 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
     private int hash(K key) {
         int adr = 0;
         for (int i = 0; i < key.toString().length(); i++) {
-            adr += 7 * adr + key.toString().charAt(i);
+            adr += 31 * adr + key.toString().charAt(i);
         }
 
         if (adr < 0) {
